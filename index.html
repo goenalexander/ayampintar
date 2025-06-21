@@ -67,6 +67,8 @@
             border: 1px solid var(--border-color);
             cursor: pointer;
             transition: background-color 0.2s, color 0.2s;
+            flex-grow: 1;
+            text-align: center;
         }
         .unit-selection label:first-of-type { border-radius: 8px 0 0 8px; }
         .unit-selection label:last-of-type { border-radius: 0 8px 8px 0; }
@@ -78,7 +80,7 @@
         }
         
         .ingredient-row {
-            background-color: #fcfcfc;
+            background-color: #fdfdfd;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             padding: 12px;
@@ -100,6 +102,7 @@
             border-radius: 4px;
             font-size: 1em;
             background-color: #fff;
+            box-sizing: border-box;
         }
         .remove-btn {
             background: none;
@@ -149,12 +152,22 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         .action-footer button.secondary {
             background-color: #6c757d;
         }
 
         /* --- Tampilan Hasil --- */
+        #results {
+             opacity: 0;
+             transform: translateY(20px);
+             transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #results.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
         #results .protein-highlight {
             font-size: 2.5em;
             font-weight: 700;
@@ -162,14 +175,25 @@
             text-align: center;
             margin: 8px 0;
         }
+        .nutrient-bar-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
         .nutrient-bar {
-            width: 100%; background-color: #e9ecef; border-radius: 4px; height: 10px; margin-top: 4px;
+            flex-grow: 1;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            height: 10px;
         }
         .nutrient-bar > div {
-            height: 100%; background-color: var(--success-color); border-radius: 4px;
+            height: 100%;
+            background-color: var(--success-color);
+            border-radius: 4px;
+            transition: width 0.5s ease-out;
         }
         .nutrient-bar.low > div { background-color: #ffc107; } /* Kuning */
-        .nutrient-bar.high > div { background-color: var(--warning-color); } /* Merah */
+        .nutrient-bar.bad > div { background-color: var(--warning-color); } /* Merah */
         
         .other-nutrients {
             display: grid;
@@ -186,10 +210,10 @@
         .recommendation-card.good { background-color: #e8f5e9; border-left: 5px solid var(--success-color); }
         .recommendation-card.ok { background-color: #fff3e0; border-left: 5px solid #ff9800; }
         .recommendation-card.bad { background-color: #ffebee; border-left: 5px solid var(--warning-color); }
-        .recommendation-card h3 { margin: 0 0 8px 0; }
+        .recommendation-card h3 { margin: 0 0 8px 0; font-size: 1.1em; }
         .recommendation-card ul { padding-left: 20px; margin: 0; }
         
-        #loader { text-align: center; padding: 40px; font-size: 1.2em; }
+        #loader { text-align: center; padding: 40px; font-size: 1.2em; color: #6c757d; }
         .hidden { display: none; }
     </style>
 </head>
@@ -200,7 +224,7 @@
     </header>
 
     <main class="container">
-        <div id="loader">Memuat data...</div>
+        <div id="loader">Memuat data bahan pakan...</div>
 
         <form id="calculator-form" class="hidden">
             <div class="card">
@@ -228,12 +252,16 @@
         <div id="results" class="hidden">
              <div class="card">
                 <h2>Hasil Analisis Pakan</h2>
-                <p style="text-align:center; margin:0;" id="total-weight-display"></p>
+                <p style="text-align:center; font-weight:bold; font-size: 0.9em; color: #6c757d;" id="total-weight-display"></p>
                 
                 <div>
                     <p style="margin: 16px 0 0 0; text-align:center; font-weight:500;">Total Protein Kasar</p>
                     <div id="protein-result" class="protein-highlight">0.00%</div>
-                    <div class="nutrient-bar" id="protein-bar-container"><div style="width: 0%;"></div></div>
+                    <div class="nutrient-bar-wrapper">
+                        <span style="font-size:0.8em;">Rendah</span>
+                        <div class="nutrient-bar" id="protein-bar-container"><div style="width: 0%;"></div></div>
+                        <span style="font-size:0.8em;">Tinggi</span>
+                    </div>
                 </div>
 
                 <hr style="border:none; border-top:1px solid var(--border-color); margin: 20px 0;">
@@ -254,15 +282,235 @@
     </footer>
 
     <script>
-    // Script ini akan sama dengan versi "fetch" dari jawaban sebelumnya.
-    // Perubahan hanya akan ada pada cara menampilkan data dan interaksi tombol.
-    // Di sini akan saya sertakan logika interaksi UI yang baru.
-    // Logika fetch dan kalkulasi tetap sama.
-    let feedData = {}; 
+        let feedData = {}; 
 
-    // (Logika fungsi parseValue, loadAndParseData, dan kalkulasi dimasukkan di sini...)
-    // ...
-    // Karena scriptnya panjang, saya akan fokus pada logika UI yang baru.
-    
-    // Asumsikan 'loadAndParseData' sudah berjalan via window.onload seperti sebelumnya.
-    // Logika
+        function parseValue(text) {
+            if (typeof text !== 'string') return text || 0;
+            const cleanText = text.trim().toLowerCase();
+            if (!cleanText || cleanText === 'n/a' || cleanText === 'ada') return 0;
+            if (cleanText.startsWith('min')) return parseFloat(cleanText.replace('min', '').trim()) || 0;
+            if (cleanText.startsWith('max')) return parseFloat(cleanText.replace('max', '').trim()) || 0;
+            if (cleanText.includes('-')) {
+                const parts = cleanText.split('-').map(s => parseFloat(s.trim()));
+                if (parts.length > 1 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+                    return (parts[0] + parts[1]) / 2;
+                }
+                return parseFloat(parts[0]) || 0;
+            }
+            return parseFloat(cleanText) || 0;
+        }
+
+        async function loadAndParseData() {
+            try {
+                const response = await fetch('unsur_pakan.html');
+                if (!response.ok) {
+                    throw new Error(`Gagal memuat file data (Status: ${response.status})`);
+                }
+                const htmlText = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlText, 'text/html');
+                const data = {};
+                const rows = doc.querySelectorAll('table tbody tr');
+                
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length > 1) {
+                        const name = cells[0].textContent.trim();
+                        if (name) {
+                           data[name] = {
+                                protein: parseValue(cells[1].textContent),
+                                energi: parseValue(cells[2].textContent),
+                                lemak: parseValue(cells[3].textContent),
+                                serat: parseValue(cells[4].textContent),
+                                kalsium: parseValue(cells[5].textContent),
+                                fosfor: parseValue(cells[6] ? cells[6].textContent : '0')
+                            };
+                        }
+                    }
+                });
+                return data;
+            } catch (error) {
+                console.error("Error saat memuat data:", error);
+                document.getElementById('loader').textContent = `Error: Gagal memuat data dari unsur_pakan.html. Pastikan file ada di server & nama file sudah benar.`;
+                return null;
+            }
+        }
+        
+        function setupCalculator(data) {
+            feedData = data;
+            document.getElementById('loader').classList.add('hidden');
+            document.getElementById('calculator-form').classList.remove('hidden');
+            
+            addIngredientRow(); 
+
+            document.getElementById('add-ingredient-btn').addEventListener('click', addIngredientRow);
+            
+            const mainBtn = document.getElementById('main-action-btn');
+            mainBtn.addEventListener('click', () => {
+                const isResultVisible = !document.getElementById('results').classList.contains('hidden');
+                if (isResultVisible) {
+                    resetCalculator();
+                } else {
+                    document.getElementById('calculator-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                }
+            });
+
+            document.getElementById('calculator-form').addEventListener('submit', handleCalculation);
+        }
+
+        function addIngredientRow() {
+            const container = document.getElementById('ingredient-inputs');
+            if (container.children.length >= 5) return;
+
+            const ingredients = Object.keys(feedData).sort();
+            const row = document.createElement('div');
+            row.className = 'ingredient-row';
+            row.innerHTML = `
+                <select class="ingredient-select">
+                    <option value="">-- Pilih Bahan Pakan --</option>
+                    ${ingredients.map(name => `<option value="${name}">${name}</option>`).join('')}
+                </select>
+                <input type="number" class="ingredient-amount" placeholder="Jumlah" min="0" step="any">
+                <button type="button" class="remove-btn">🗑️</button>
+            `;
+            container.appendChild(row);
+            row.querySelector('.remove-btn').addEventListener('click', () => {
+                row.remove();
+                document.getElementById('add-ingredient-btn').classList.remove('hidden');
+            });
+
+            if (container.children.length >= 5) {
+                document.getElementById('add-ingredient-btn').classList.add('hidden');
+            }
+        }
+
+        function resetCalculator() {
+            const container = document.getElementById('ingredient-inputs');
+            container.innerHTML = '';
+            addIngredientRow();
+            document.getElementById('results').classList.add('hidden');
+            
+            const mainBtn = document.getElementById('main-action-btn');
+            mainBtn.textContent = 'Hitung Kandungan Gizi';
+            mainBtn.classList.remove('secondary');
+            document.getElementById('calculator-form').reset();
+        }
+
+        function handleCalculation(event) {
+            event.preventDefault();
+            const unit = document.querySelector('input[name="unit"]:checked').value;
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.style.display = 'none';
+
+            let finalNutrients = { protein: 0, energi: 0, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 };
+            let totalWeight = 0;
+            let inputs = document.querySelectorAll('.ingredient-row');
+            
+            if (unit === 'gram') {
+                let totalProteinGrams = 0;
+                for (const row of inputs) {
+                    const ingredientName = row.querySelector('.ingredient-select').value;
+                    const amount = parseFloat(row.querySelector('.ingredient-amount').value);
+                    if (ingredientName && amount > 0) {
+                        const nutrientData = feedData[ingredientName];
+                        totalWeight += amount;
+                        for (const key in finalNutrients) {
+                           finalNutrients[key] += amount * (nutrientData[key] || 0);
+                        }
+                    }
+                }
+                if (totalWeight > 0) {
+                    for (const key in finalNutrients) {
+                        finalNutrients[key] /= totalWeight;
+                    }
+                }
+            } else { // percent
+                let totalPercent = 0;
+                for (const row of inputs) {
+                    const ingredientName = row.querySelector('.ingredient-select').value;
+                    const amount = parseFloat(row.querySelector('.ingredient-amount').value);
+                     if (ingredientName && amount > 0) {
+                        const nutrientData = feedData[ingredientName];
+                        totalPercent += amount;
+                        for (const key in finalNutrients) {
+                            finalNutrients[key] += amount / 100 * (nutrientData[key] || 0);
+                        }
+                    }
+                }
+                 if (Math.abs(totalPercent - 100) > 0.01 && totalPercent > 0) {
+                     errorMessage.textContent = `Total persentase harus 100%, saat ini totalnya ${totalPercent.toFixed(1)}%.`;
+                     errorMessage.style.display = 'block';
+                     return;
+                 }
+            }
+            
+            if(totalWeight > 0 || (unit === 'percent' && Object.values(finalNutrients).some(v => v > 0))) {
+                 displayResults(finalNutrients, totalWeight, unit);
+                 const mainBtn = document.getElementById('main-action-btn');
+                 mainBtn.textContent = 'Hitung Ulang / Bersihkan';
+                 mainBtn.classList.add('secondary');
+            } else {
+                 errorMessage.textContent = 'Silakan isi minimal satu bahan pakan dan jumlahnya.';
+                 errorMessage.style.display = 'block';
+            }
+        }
+        
+        function displayResults(nutrients, weight, unit) {
+            const resultsDiv = document.getElementById('results');
+            const proteinResultEl = document.getElementById('protein-result');
+            const otherNutrientsEl = document.getElementById('other-nutrients-results');
+            const recommendationContainer = document.getElementById('recommendation-container');
+            const totalWeightEl = document.getElementById('total-weight-display');
+
+            // --- Tampilkan Hasil Utama ---
+            proteinResultEl.textContent = `${nutrients.protein.toFixed(2)}%`;
+            otherNutrientsEl.innerHTML = `
+                <div>Energi: <strong>${nutrients.energi.toFixed(0)} kkal/kg</strong></div>
+                <div>Lemak: <strong>${nutrients.lemak.toFixed(2)} %</strong></div>
+                <div>Serat: <strong>${nutrients.serat.toFixed(2)} %</strong></div>
+                <div>Kalsium: <strong>${nutrients.kalsium.toFixed(3)} %</strong></div>
+                <div>Fosfor: <strong>${nutrients.fosfor.toFixed(3)} %</strong></div>
+            `;
+            totalWeightEl.textContent = (unit === 'gram' && weight > 0) ? `Total Bobot Campuran: ${weight.toFixed(2)} Gram` : '';
+
+            // --- Atur Bar Indikator Protein ---
+            const proteinBar = document.querySelector('#protein-bar-container > div');
+            const proteinBarContainer = document.getElementById('protein-bar-container');
+            let proteinPercent = (nutrients.protein / 25) * 100; // Asumsi 25% adalah max yg umum
+            if (proteinPercent > 100) proteinPercent = 100;
+            proteinBar.style.width = `${proteinPercent}%`;
+            
+            proteinBarContainer.className = 'nutrient-bar'; // Reset class
+            if(nutrients.protein < 17) proteinBarContainer.classList.add('bad');
+            else if(nutrients.protein >= 17 && nutrients.protein < 21) proteinBarContainer.classList.add('good');
+            else proteinBarContainer.classList.add('ok');
+
+            // --- Tampilkan Rekomendasi ---
+            let recHTML = '';
+            const protein = nutrients.protein;
+            if (protein > 0 && protein < 17) {
+                 recHTML = `<div class="recommendation-card bad"><h3>⚠️ Protein Kurang</h3><p>Kadar protein di bawah standar minimum (17%). Tambahkan bahan seperti <b>Bungkil Kedelai</b> atau <b>Tepung Ikan</b>.</p></div>`;
+            } else if (protein >= 17 && protein < 18) {
+                 recHTML = `<div class="recommendation-card ok"><h3>👍 Cukup untuk Fase Akhir/Layer</h3><ul><li>Ayam Pedaging Finisher</li><li>Ayam Petelur Produksi</li><li>Bebek Pedaging Finisher</li></ul></div>`;
+            } else if (protein >= 18 && protein < 21) {
+                recHTML = `<div class="recommendation-card good"><h3>✅ Sangat Cocok untuk Fase Grower</h3><ul><li>Ayam Pedaging Grower</li><li>Ayam Petelur Grower</li><li>Bebek Pedaging Grower</li></ul></div>`;
+            } else if (protein >= 21) {
+                recHTML = `<div class="recommendation-card good"><h3>🚀 Sangat Cocok untuk Fase Starter</h3><ul><li>Ayam Pedaging Starter</li><li>Ayam Petelur Starter</li><li>Bebek Pedaging Starter</li></ul></div>`;
+            }
+            recommendationContainer.innerHTML = recHTML;
+
+            resultsDiv.classList.remove('hidden');
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Jalankan aplikasi
+        window.onload = async () => {
+            const data = await loadAndParseData();
+            if (data && Object.keys(data).length > 0) {
+                setupCalculator(data);
+            }
+        };
+
+    </script>
+</body>
+</html>
