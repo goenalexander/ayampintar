@@ -23,7 +23,6 @@
             text-align: center;
             color: #004D40;
         }
-        /* REVISI: Mengembalikan radio button tunggal di atas */
         .unit-selection {
             text-align: center;
             margin-bottom: 20px;
@@ -65,7 +64,6 @@
             background-color: #004D40;
         }
         
-        /* REVISI: Desain ulang bagian dukungan */
         .support-section {
             text-align: center;
             margin: 40px 0;
@@ -105,8 +103,7 @@
         #results { 
             display: none; 
             margin-top: 20px;
-            /* REVISI: Latar belakang lembut pada tabel hasil */
-            background-color: #E8F5E9; /* Warna hijau sangat muda */
+            background-color: #E8F5E9;
             padding: 20px;
             border-radius: 8px;
             border: 1px solid #C8E6C9;
@@ -115,16 +112,50 @@
         #nutrition-table th, #nutrition-table td { border: 1px solid #ddd; padding: 10px; text-align: left; }
         #nutrition-table th { background-color: #f2f2f2; }
         #nutrition-table td:nth-child(2) { text-align: right; font-weight: bold; }
-        /* REVISI: Style khusus untuk baris protein */
         .protein-row td {
             font-weight: bold !important;
             font-size: 1.1em;
-            color: #1B5E20; /* Warna hijau lebih gelap */
+            color: #1B5E20;
         }
 
         #recommendation { margin-top: 20px; padding: 15px; border-radius: 5px; background-color: #FFFFFF; border-left: 5px solid #00796B;}
         
-        .footer { margin-top: 40px; text-align: center; font-size: 0.9em; color: #6c757d; }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+        
+        /* REVISI BARU: Style untuk pemisah toko */
+        .shop-separator {
+            padding: 25px 20px;
+            margin: 30px 0;
+            background-color: #f0f4f8; /* Warna biru muda lembut */
+            border-top: 1px solid #d9e2ec;
+            border-bottom: 1px solid #d9e2ec;
+            text-align: center;
+        }
+        .shop-separator h4 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: #333;
+        }
+        .shop-btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background-color: #EE4D2D; /* Warna oranye Shopee */
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+        .shop-btn:hover {
+            background-color: #d73111;
+        }
+
         .disclaimer {
             margin-top: 20px;
             padding: 10px;
@@ -152,7 +183,6 @@
                 <label><input type="radio" name="unit" value="percent"> Persen (%)</label>
             </div>
             <hr style="border: none; border-top: 1px solid #eee; margin: 25px 0;">
-
             <div id="ingredient-inputs">
                 <div class="input-row">
                     <select class="ingredient-select"></select>
@@ -200,6 +230,11 @@
             <p>"maju terus peternak Indonesia"</p>
             <p>by. <a href="https://www.instagram.com/jalan.goen" target="_blank" style="text-decoration:none; color:inherit;"><span><svg height="16" viewBox="0 0 16 16" width="16" style="vertical-align: -2px;"><path d="M4.869 0.002c-1.8 0-2.526 0.222-3.233 0.523-0.743 0.318-1.225 0.75-1.638 1.163C-0.319 2.126 0 2.859 0 4.659v6.682c0 1.8 0.222 2.526 0.523 3.233 0.318 0.743 0.75 1.225 1.638 1.638 0.438 0.417 1.161 0.681 2.126 0.681h6.212c1.8 0 2.526-0.222 3.233-0.523 0.743-0.318 1.225-0.75 1.638-1.163 0.417-0.438 0.681-1.161 0.681-2.126V4.659c0-1.8-0.222-2.526-0.523-3.233-0.318-0.743-0.75-1.225-1.163-1.638C13.291 0.22 12.565 0 10.765 0H4.869zM4.708 1.442h6.584c1.473 0 1.958 0.17 2.316 0.322 0.417 0.177 0.681 0.417 0.941 0.677 0.26 0.26 0.5 0.523 0.677 0.941 0.152 0.358 0.322 0.843 0.322 2.316v6.366c0 1.473-0.17 1.958-0.322 2.316-0.177 0.417-0.417 0.681-0.677 0.941-0.26 0.26-0.523 0.5-0.941 0.677-0.358 0.152-0.843 0.322-2.316 0.322H4.708c-1.473 0-1.958-0.17-2.316-0.322-0.417-0.177-0.681-0.417-0.941-0.677-0.26-0.26-0.5-0.523-0.677-0.941-0.152-0.358-0.322-0.843-0.322-2.316V4.958c0-1.473 0.17-1.958 0.322-2.316 0.177-0.417 0.417-0.681 0.677-0.941 0.26-0.26 0.523-0.5 0.941-0.677 0.358-0.152 0.843-0.322 2.316-0.322zM8 3.889c-2.277 0-4.111 1.834-4.111 4.111s1.834 4.111 4.111 4.111 4.111-1.834 4.111-4.111-1.834-4.111-4.111-4.111zm0 1.442A2.669 2.669 0 115.331 8a2.669 2.669 0 012.669-2.669zm4.269-1.21a0.96 0.96 0 11-1.92 0 0.96 0.96 0 011.92 0z" fill-rule="evenodd"></path></svg></span> kandang.goen</a></p>
             
+            <div class="shop-separator">
+                <h4>Butuh Peralatan & Pakan Berkualitas?</h4>
+                <a href="https://collshp.com/keranjang.goen" class="shop-btn" target="_blank">🛒 Kunjungi Toko Kami di Shopee</a>
+            </div>
+            
             <div class="disclaimer">
                 <strong>DISCLAIMER:</strong> Kalkulator ini bersifat sebagai alat bantu estimasi. Kandungan gizi riil pada bahan pakan dapat bervariasi tergantung pada kualitas, proses pengolahan, dan kebijakan produsen pakan. Selalu lakukan pengamatan langsung terhadap kondisi ternak Anda.
             </div>
@@ -209,6 +244,7 @@
     <script>
         let feedData = {};
 
+        // Fungsi parseValue untuk menangani format data
         function parseValue(text) {
             if (typeof text !== 'string') return text || 0;
             const cleanText = text.trim().toLowerCase();
@@ -223,6 +259,7 @@
             return parseFloat(cleanText) || 0;
         }
 
+        // Fungsi fetch data dari unsur_pakan.html
         async function loadAndParseData() {
             try {
                 const response = await fetch('unsur_pakan.html');
@@ -251,11 +288,12 @@
                 return data;
             } catch (error) {
                 console.error("Error saat memuat data:", error);
-                document.getElementById('loader').textContent = `Error: Gagal memuat data dari unsur_pakan.html. Pastikan file ada di server & nama file sudah benar.`;
+                document.getElementById('loader').textContent = `Error: Gagal memuat data. Pastikan file unsur_pakan.html ada di folder yg sama & Anda menjalankan ini dari server.`;
                 return null;
             }
         }
         
+        // Fungsi utama yang berjalan saat halaman dimuat
         window.onload = async () => {
             const data = await loadAndParseData();
             if (data && Object.keys(data).length > 0) {
@@ -275,66 +313,67 @@
             }
         };
 
+        // Event listener untuk form submit
         document.getElementById('calculator-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const errorMessage = document.getElementById('error-message');
             errorMessage.style.display = 'none';
 
-            // REVISI: Mengambil nilai satuan dari radio button tunggal
             const unit = document.querySelector('input[name="unit"]:checked').value;
             let finalNutrients = { protein: 0, energi: 0, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 };
+            let inputs = [];
+            const rows = document.querySelectorAll('.input-row');
+            
+            rows.forEach(row => {
+                 const ingredientName = row.querySelector('.ingredient-select').value;
+                 const amount = parseFloat(row.querySelector('.ingredient-amount').value);
+                 if (ingredientName && amount > 0) {
+                    inputs.push({ name: ingredientName, amount: amount });
+                 }
+            });
+
+            if (inputs.length === 0) {
+                errorMessage.textContent = 'Silakan isi minimal satu bahan pakan dan jumlahnya.';
+                errorMessage.style.display = 'block';
+                return;
+            }
             
             if (unit === 'gram') {
                 let totalWeight = 0;
-                const rows = document.querySelectorAll('.input-row');
-                rows.forEach(row => {
-                    const ingredientName = row.querySelector('.ingredient-select').value;
-                    const amount = parseFloat(row.querySelector('.ingredient-amount').value);
-                    if (ingredientName && amount > 0) {
-                        const nutrientData = feedData[ingredientName];
-                        totalWeight += amount;
-                        for (const key in finalNutrients) {
-                            finalNutrients[key] += amount * (nutrientData[key] || 0);
-                        }
+                inputs.forEach(input => {
+                    const nutrientData = feedData[input.name];
+                    totalWeight += input.amount;
+                    for (const key in finalNutrients) {
+                        finalNutrients[key] += input.amount * (nutrientData[key] || 0);
                     }
                 });
                 if (totalWeight > 0) {
                     for (const key in finalNutrients) {
                         finalNutrients[key] /= totalWeight;
                     }
-                    displayResults(finalNutrients, totalWeight, 'gram');
-                } else {
-                    errorMessage.textContent = 'Silakan isi minimal satu bahan pakan dan jumlahnya.';
-                    errorMessage.style.display = 'block';
                 }
+                displayResults(finalNutrients, totalWeight, 'gram');
             } else { // unit is 'percent'
                 let totalPercent = 0;
-                const rows = document.querySelectorAll('.input-row');
-                rows.forEach(row => {
-                    const ingredientName = row.querySelector('.ingredient-select').value;
-                    const amount = parseFloat(row.querySelector('.ingredient-amount').value);
-                    if (ingredientName && amount > 0) {
-                        const nutrientData = feedData[ingredientName];
-                        totalPercent += amount;
-                        for (const key in finalNutrients) {
-                            finalNutrients[key] += amount / 100 * (nutrientData[key] || 0);
-                        }
-                    }
-                });
-                if (Math.abs(totalPercent - 100) > 0.01 && totalPercent > 0) {
+                inputs.forEach(input => { totalPercent += input.amount; });
+
+                if (Math.abs(totalPercent - 100) > 0.01) {
                     errorMessage.textContent = `Total persentase harus 100%, saat ini totalnya ${totalPercent.toFixed(1)}%.`;
                     errorMessage.style.display = 'block';
                     return;
                 }
-                 if (totalPercent > 0) {
-                    displayResults(finalNutrients, 100, 'percent');
-                 } else {
-                    errorMessage.textContent = 'Silakan isi minimal satu bahan pakan dan jumlahnya.';
-                    errorMessage.style.display = 'block';
-                 }
+
+                inputs.forEach(input => {
+                    const nutrientData = feedData[input.name];
+                    for (const key in finalNutrients) {
+                        finalNutrients[key] += input.amount / 100 * (nutrientData[key] || 0);
+                    }
+                });
+                displayResults(finalNutrients, 100, 'percent');
             }
         });
 
+        // Fungsi untuk menampilkan hasil
         function displayResults(nutrients, weight, unit) {
             const resultsDiv = document.getElementById('results');
             const tableBody = document.querySelector("#nutrition-table tbody");
@@ -350,15 +389,19 @@
             };
             
             let tableHTML = '';
-            for (const key in nutrients) {
-                const isProtein = key === 'protein';
-                const value = (key === 'energi') ? nutrients[key].toFixed(0) + ' kkal/kg' : nutrients[key].toFixed(isProtein ? 2 : 3) + ' %';
-                // REVISI: Menambahkan class 'protein-row' jika unsur gizinya protein
-                tableHTML += `<tr class="${isProtein ? 'protein-row' : ''}">
-                                <td>${nutrientLabels[key]}</td>
-                                <td>${value}</td>
-                              </tr>`;
-            }
+            // Urutan tampilan unsur gizi
+            const displayOrder = ['protein', 'energi', 'lemak', 'serat', 'kalsium', 'fosfor'];
+
+            displayOrder.forEach(key => {
+                 if (nutrients.hasOwnProperty(key)) {
+                    const isProtein = key === 'protein';
+                    const value = (key === 'energi') ? nutrients[key].toFixed(0) + ' kkal/kg' : nutrients[key].toFixed(isProtein ? 2 : 3) + ' %';
+                    tableHTML += `<tr class="${isProtein ? 'protein-row' : ''}">
+                                    <td>${nutrientLabels[key]}</td>
+                                    <td>${value}</td>
+                                  </tr>`;
+                 }
+            });
             tableBody.innerHTML = tableHTML;
             
             totalWeightEl.textContent = (unit === 'gram' && weight > 0) ? `Total Bobot Campuran: ${weight.toFixed(2)} Gram` : '';
@@ -382,6 +425,5 @@
             resultsDiv.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
-
 </body>
 </html>
