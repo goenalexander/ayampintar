@@ -71,16 +71,6 @@
             background-color: #f7f7f7;
             border-radius: 8px;
         }
-        .support-section h3 {
-            margin-top: 0;
-            font-size: 1.2em;
-            color: #333;
-        }
-        .support-section p {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 20px;
-        }
         .support-btn {
             padding: 15px 30px;
             font-size: 1.1em;
@@ -127,11 +117,10 @@
             color: #6c757d;
         }
         
-        /* REVISI BARU: Style untuk pemisah toko */
         .shop-separator {
             padding: 25px 20px;
             margin: 30px 0;
-            background-color: #f0f4f8; /* Warna biru muda lembut */
+            background-color: #f0f4f8;
             border-top: 1px solid #d9e2ec;
             border-bottom: 1px solid #d9e2ec;
             text-align: center;
@@ -145,7 +134,7 @@
         .shop-btn {
             display: inline-block;
             padding: 10px 24px;
-            background-color: #EE4D2D; /* Warna oranye Shopee */
+            background-color: #EE4D2D;
             color: white;
             text-decoration: none;
             font-weight: bold;
@@ -184,6 +173,7 @@
             </div>
             <hr style="border: none; border-top: 1px solid #eee; margin: 25px 0;">
             <div id="ingredient-inputs">
+                <!-- 5 baris input statis -->
                 <div class="input-row">
                     <select class="ingredient-select"></select>
                     <input type="number" class="ingredient-amount" placeholder="Jumlah" min="0" step="any">
@@ -227,17 +217,13 @@
         </div>
 
         <footer class="footer">
-
-            <div class="shop-separator">
-                <h4>Butuh Peralatan & Pakan Berkualitas?</h4>
-                <a href="toko.html" class="shop-btn">🛒 Kunjungi Toko Rekomendasi Kami</a>
-            </div>
-
-            
             <p>"maju terus peternak Indonesia"</p>
             <p>by. <a href="https://www.instagram.com/jalan.goen" target="_blank" style="text-decoration:none; color:inherit;"><span><svg height="16" viewBox="0 0 16 16" width="16" style="vertical-align: -2px;"><path d="M4.869 0.002c-1.8 0-2.526 0.222-3.233 0.523-0.743 0.318-1.225 0.75-1.638 1.163C-0.319 2.126 0 2.859 0 4.659v6.682c0 1.8 0.222 2.526 0.523 3.233 0.318 0.743 0.75 1.225 1.638 1.638 0.438 0.417 1.161 0.681 2.126 0.681h6.212c1.8 0 2.526-0.222 3.233-0.523 0.743-0.318 1.225-0.75 1.638-1.163 0.417-0.438 0.681-1.161 0.681-2.126V4.659c0-1.8-0.222-2.526-0.523-3.233-0.318-0.743-0.75-1.225-1.163-1.638C13.291 0.22 12.565 0 10.765 0H4.869zM4.708 1.442h6.584c1.473 0 1.958 0.17 2.316 0.322 0.417 0.177 0.681 0.417 0.941 0.677 0.26 0.26 0.5 0.523 0.677 0.941 0.152 0.358 0.322 0.843 0.322 2.316v6.366c0 1.473-0.17 1.958-0.322 2.316-0.177 0.417-0.417 0.681-0.677 0.941-0.26 0.26-0.523 0.5-0.941 0.677-0.358 0.152-0.843 0.322-2.316 0.322H4.708c-1.473 0-1.958-0.17-2.316-0.322-0.417-0.177-0.681-0.417-0.941-0.677-0.26-0.26-0.5-0.523-0.677-0.941-0.152-0.358-0.322-0.843-0.322-2.316V4.958c0-1.473 0.17-1.958 0.322-2.316 0.177-0.417 0.417-0.681 0.677-0.941 0.26-0.26 0.523-0.5 0.941-0.677 0.358-0.152 0.843-0.322 2.316-0.322zM8 3.889c-2.277 0-4.111 1.834-4.111 4.111s1.834 4.111 4.111 4.111 4.111-1.834 4.111-4.111-1.834-4.111-4.111-4.111zm0 1.442A2.669 2.669 0 115.331 8a2.669 2.669 0 012.669-2.669zm4.269-1.21a0.96 0.96 0 11-1.92 0 0.96 0.96 0 011.92 0z" fill-rule="evenodd"></path></svg></span> kandang.goen</a></p>
             
-
+            <div class="shop-separator">
+                <h4>Butuh Peralatan & Pakan Berkualitas?</h4>
+                <a href="https://collshp.com/keranjang.goen" class="shop-btn" target="_blank" rel="noopener noreferrer">🛒 Kunjungi Koleksi Shopee Kami</a>
+            </div>
             
             <div class="disclaimer">
                 <strong>DISCLAIMER:</strong> Kalkulator ini bersifat sebagai alat bantu estimasi. Kandungan gizi riil pada bahan pakan dapat bervariasi tergantung pada kualitas, proses pengolahan, dan kebijakan produsen pakan. Selalu lakukan pengamatan langsung terhadap kondisi ternak Anda.
@@ -246,9 +232,7 @@
     </div>
     
     <script>
-        let feedData = {};
-
-        // Fungsi parseValue untuk menangani format data
+        // REVISI: Data disematkan langsung untuk menghilangkan error 'fetch'
         function parseValue(text) {
             if (typeof text !== 'string') return text || 0;
             const cleanText = text.trim().toLowerCase();
@@ -263,61 +247,65 @@
             return parseFloat(cleanText) || 0;
         }
 
-        // Fungsi fetch data dari unsur_pakan.html
-        async function loadAndParseData() {
-            try {
-                const response = await fetch('unsur_pakan.html');
-                if (!response.ok) throw new Error(`Gagal memuat file data (Status: ${response.status})`);
-                const htmlText = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlText, 'text/html');
-                const data = {};
-                const rows = doc.querySelectorAll('table tbody tr');
-                rows.forEach(row => {
-                    const cells = row.querySelectorAll('td');
-                    if (cells.length > 1) {
-                        const name = cells[0].textContent.trim();
-                        if (name) {
-                           data[name] = {
-                                protein: parseValue(cells[1].textContent),
-                                energi: parseValue(cells[2].textContent),
-                                lemak: parseValue(cells[3].textContent),
-                                serat: parseValue(cells[4].textContent),
-                                kalsium: parseValue(cells[5].textContent),
-                                fosfor: parseValue(cells[6] ? cells[6].textContent : '0')
-                            };
-                        }
-                    }
-                });
-                return data;
-            } catch (error) {
-                console.error("Error saat memuat data:", error);
-                document.getElementById('loader').textContent = `Error: Gagal memuat data. Pastikan file unsur_pakan.html ada di folder yg sama & Anda menjalankan ini dari server.`;
-                return null;
-            }
-        }
+        const feedData = {
+            'Jagung Giling': { protein: 8.7, energi: 3610, lemak: 4.5, serat: 2.5, kalsium: 0.009, fosfor: 0.038 },
+            'Dedak Padi': { protein: 13, energi: 1900, lemak: 5, serat: 10, kalsium: 0.06, fosfor: 1.5 },
+            'Menir': { protein: 7.7, energi: 3620, lemak: 4.4, serat: 0.2, kalsium: 0.022, fosfor: 0.272 },
+            'Bungkil Kedelai': { protein: 45, energi: 2700, lemak: 1.25, serat: 4, kalsium: 0.2, fosfor: 0.67 },
+            'Tepung Ikan': { protein: 54, energi: 2750, lemak: 8, serat: 1, kalsium: 6.5, fosfor: 2.88 },
+            'Tepung Tulang': { protein: 0, energi: 0, lemak: 0, serat: 0, kalsium: 24, fosfor: 12 },
+            'Pollard': { protein: 15, energi: 1700, lemak: 4, serat: 9, kalsium: 0.1, fosfor: 0.9 },
+            'Canola (Bungkil Canola)': { protein: 36, energi: 2110.5, lemak: 1.5, serat: 34.53, kalsium: 0, fosfor: 0 },
+            'Daun Singkong': { protein: 6.8, energi: 0, lemak: 1.2, serat: 2.4, kalsium: 0.165, fosfor: 0.054 },
+            'Daun Pepaya': { protein: 8, energi: 790, lemak: 2, serat: 0, kalsium: 0.353, fosfor: 0.063 },
+            'Daun Kangkung (Segar)': { protein: 3.4, energi: 2900, lemak: 0.7, serat: 2, kalsium: 0.067, fosfor: 0.054 },
+            'Daun Sawi Hijau': { protein: 2.3, energi: 280, lemak: 0.3, serat: 2.5, kalsium: 0.22, fosfor: 0.038 },
+            'Daun Sawi Putih': { protein: 1, energi: 90, lemak: 0.1, serat: 0.8, kalsium: 0.056, fosfor: 0.042 },
+            'Daun Kol (Segar)': { protein: 2.5, energi: 510, lemak: 1.1, serat: 3.4, kalsium: 0.1, fosfor: 0.05 },
+            'Daun Kelor': { protein: 25.68, energi: 3162.97, lemak: 2.25, serat: 10.05, kalsium: 2.66, fosfor: 0.95 },
+            'Daun Bayam (Segar)': { protein: 2.2, energi: 160, lemak: 0.4, serat: 0.7, kalsium: 0.215, fosfor: 0.076 },
+            'Kecambah Padi': { protein: 9.06, energi: 0, lemak: 2.15, serat: 3.99, kalsium: 0.00043, fosfor: 0.18 },
+            'Kecambah Jagung': { protein: 3.27, energi: 3350, lemak: 1.35, serat: 2, kalsium: 0, fosfor: 0.089 },
+            'Azolla (Fermentasi)': { protein: 26, energi: 2893, lemak: 7, serat: 0, kalsium: 0, fosfor: 0 },
+            'Azolla (Segar Non-Fermentasi)': { protein: 21.37, energi: 2039, lemak: 2.8, serat: 24.03, kalsium: 1.16, fosfor: 1.29 },
+            'Nasi Aking (Fermentasi)': { protein: 8.31, energi: 3100, lemak: 3.28, serat: 5.7, kalsium: 0.99, fosfor: 0.52 },
+            'Nasi Limbah Rumah Tangga': { protein: 7.92, energi: 2323, lemak: 2.08, serat: 5.9, kalsium: 1.09, fosfor: 0.38 },
+            'Ampas Tahu (Kering)': { protein: 23.39, energi: 2830, lemak: 9.96, serat: 19.44, kalsium: 0.61, fosfor: 0.35 },
+            'Ampas Singkong (Onggok)': { protein: 2, energi: 2783, lemak: 2.3, serat: 31.6, kalsium: 0.15, fosfor: 0.14 },
+            'Konsentrat Protein 32% (Umum)': { protein: 32, energi: 1800, lemak: 4, serat: 2, kalsium: 10, fosfor: 0 },
+            'Konsentrat Protein 34% (124P)': { protein: 34, energi: 2755, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
+            'Konsentrat Protein 35% (Wonokoyo KLS Super)': { protein: 35, energi: 0, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
+            'Konsentrat Protein 37% (Grower)': { protein: 37, energi: 0, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
+            'Konsentrat Protein 37-39% (Hi-Pro-Vite 144 Itik)': { protein: 38, energi: 2538, lemak: 2, serat: 6, kalsium: 12, fosfor: 1.2 },
+            'Konsentrat Protein 40% (Comfeed Broiler)': { protein: 40, energi: 2500, lemak: 4, serat: 7, kalsium: 3, fosfor: 1.5 },
+            'Hi-Pro-Vite 511': { protein: 20, energi: 2950, lemak: 5, serat: 5, kalsium: 0.95, fosfor: 0.5 },
+            'Hi-Pro-Vite 512': { protein: 19, energi: 3100, lemak: 5, serat: 5, kalsium: 0.95, fosfor: 0.45 },
+            'Hi-Pro-Vite 591K': { protein: 19, energi: 0, lemak: 3, serat: 7, kalsium: 1.05, fosfor: 0.8 },
+            'Hi-Pro-Vite 592K': { protein: 19, energi: 2900, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
+            'Hi-Pro-Vite 594K': { protein: 18, energi: 3000, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
+            'Hi-Pro-Vite 324KJ': { protein: 18, energi: 2705, lemak: 0, serat: 0, kalsium: 4.575, fosfor: 0.415 },
+            'Comfeed BR 1': { protein: 20.5, energi: 0, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
+            'Comfeed Unggul 1': { protein: 19, energi: 0, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
+            'Comfeed Unggul 2': { protein: 19, energi: 2900, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
+            'Comfeed GF 511': { protein: 20.5, energi: 3000, lemak: 0, serat: 5, kalsium: 1, fosfor: 0.8 },
+        };
         
-        // Fungsi utama yang berjalan saat halaman dimuat
-        window.onload = async () => {
-            const data = await loadAndParseData();
-            if (data && Object.keys(data).length > 0) {
-                feedData = data;
-                document.getElementById('loader').classList.add('hidden');
-                document.getElementById('calculator-form').classList.remove('hidden');
+        // REVISI: window.onload disederhanakan karena tidak lagi async
+        window.onload = () => {
+            document.getElementById('loader').classList.add('hidden');
+            document.getElementById('calculator-form').classList.remove('hidden');
 
-                const selects = document.querySelectorAll('.ingredient-select');
-                const ingredients = Object.keys(feedData).sort();
-                let optionsHTML = '<option value="">-- Pilih Bahan Pakan --</option>';
-                ingredients.forEach(name => {
-                    optionsHTML += `<option value="${name}">${name}</option>`;
-                });
-                selects.forEach(select => {
-                    select.innerHTML = optionsHTML;
-                });
-            }
+            const selects = document.querySelectorAll('.ingredient-select');
+            const ingredients = Object.keys(feedData).sort();
+            let optionsHTML = '<option value="">-- Pilih Bahan Pakan --</option>';
+            ingredients.forEach(name => {
+                optionsHTML += `<option value="${name}">${name}</option>`;
+            });
+            selects.forEach(select => {
+                select.innerHTML = optionsHTML;
+            });
         };
 
-        // Event listener untuk form submit
         document.getElementById('calculator-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const errorMessage = document.getElementById('error-message');
@@ -377,7 +365,6 @@
             }
         });
 
-        // Fungsi untuk menampilkan hasil
         function displayResults(nutrients, weight, unit) {
             const resultsDiv = document.getElementById('results');
             const tableBody = document.querySelector("#nutrition-table tbody");
@@ -393,7 +380,6 @@
             };
             
             let tableHTML = '';
-            // Urutan tampilan unsur gizi
             const displayOrder = ['protein', 'energi', 'lemak', 'serat', 'kalsium', 'fosfor'];
 
             displayOrder.forEach(key => {
