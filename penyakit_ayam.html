@@ -64,11 +64,13 @@
 
     <div class="container mx-auto p-4 md:p-8 max-w-4xl">
         
+        <!-- REVISI: Tata letak header diubah -->
         <header class="mb-8">
-            <div class="mb-8"> <!-- REVISI: Spasi lebih besar -->
+            <div class="mb-6"> 
                 <a href="index.html" class="nav-btn">← Kembali ke Kalkulator Pakan</a>
             </div>
-            <div class="text-center">
+            <!-- REVISI: Judul dikembalikan ke dalam "kartu" putih -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 text-center">
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-900">🐓 Diagnosa Dini Penyakit Ayam</h1>
                 <p class="mt-2 text-gray-600">Pilih gejala yang teramati pada ayam Anda untuk mendapatkan perkiraan penyakit.</p>
             </div>
@@ -199,7 +201,6 @@
                             const treatmentInfo = document.getElementById(targetId);
                             const isHidden = treatmentInfo.classList.toggle('hidden');
                             btn.textContent = isHidden ? 'Tampilkan Saran Pengobatan & Pencegahan' : 'Sembunyikan Saran';
-                            // REVISI: Tambahkan efek scroll jika saran dibuka
                             if (!isHidden) {
                                 setTimeout(() => {
                                     treatmentInfo.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
