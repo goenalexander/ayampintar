@@ -19,7 +19,36 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        h1, h2 {
+        header {
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        .header-nav {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 25px; /* REVISI: Menambah spasi */
+        }
+        header h1 {
+            margin: 0;
+            color: #004D40;
+            text-align: center;
+        }
+        .nav-btn {
+            text-decoration: none;
+            color: #00796B;
+            border: 1px solid #00796B;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .nav-btn:hover {
+            background-color: #00796B;
+            color: white;
+        }
+        h2 {
             text-align: center;
             color: #004D40;
         }
@@ -48,6 +77,9 @@
             box-sizing: border-box;
             font-size: 1em;
         }
+        select.placeholder-shown {
+            color: #888;
+        }
         button#calculate-btn {
             width: 100%;
             padding: 12px;
@@ -63,7 +95,6 @@
         button#calculate-btn:hover {
             background-color: #004D40;
         }
-        
         .support-section {
             text-align: center;
             margin: 40px 0;
@@ -89,7 +120,6 @@
             transform: scale(1.05);
             box-shadow: 0 6px 15px rgba(255, 152, 0, 0.5);
         }
-
         #results { 
             display: none; 
             margin-top: 20px;
@@ -107,16 +137,13 @@
             font-size: 1.1em;
             color: #1B5E20;
         }
-
         #recommendation { margin-top: 20px; padding: 15px; border-radius: 5px; background-color: #FFFFFF; border-left: 5px solid #00796B;}
-        
         .footer {
             margin-top: 40px;
             text-align: center;
             font-size: 0.9em;
             color: #6c757d;
         }
-        
         .shop-separator {
             padding: 25px 20px;
             margin: 30px 0;
@@ -125,34 +152,14 @@
             border-bottom: 1px solid #d9e2ec;
             text-align: center;
         }
-        .shop-separator h4 {
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-            color: #333;
-        }
-        .shop-btn {
-            display: inline-block;
-            padding: 10px 24px;
-            background-color: #EE4D2D;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: background-color 0.2s;
-        }
-        .shop-btn:hover {
-            background-color: #d73111;
-        }
-
-        .disclaimer {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #eeeeee;
-            border-radius: 5px;
-            font-size: 0.8em;
-            text-align: justify;
-        }
+        .shop-separator h4 { margin-top: 0; margin-bottom: 15px; font-size: 1.1em; color: #333; }
+        .shop-btn { display: inline-block; padding: 10px 24px; background-color: #EE4D2D; color: white; text-decoration: none; font-weight: bold; border-radius: 5px; transition: background-color 0.2s; }
+        .shop-btn:hover { background-color: #d73111; }
+        .footnote { padding: 20px; margin-top: -10px; margin-bottom: 20px; }
+        .footnote p { margin: 5px 0; }
+        .footnote-byline { text-decoration: none; color: #004D40; font-weight: bold; }
+        .footnote-byline:hover { text-decoration: underline; }
+        .disclaimer { margin-top: 20px; padding: 10px; background-color: #eeeeee; border-radius: 5px; font-size: 0.8em; text-align: justify; }
         #loader { text-align: center; padding: 40px; font-size: 1.2em; color: #6c757d; }
         .hidden { display: none; }
         .error { color: red; text-align: center; font-weight: bold; margin: 10px 0;}
@@ -161,6 +168,9 @@
 <body>
     <div class="wrapper">
         <header>
+            <div class="header-nav">
+                <a href="penyakit_ayam.html" class="nav-btn">Diagnosa Penyakit Ayam →</a>
+            </div>
             <h1>Kalkulator Pakan Unggas</h1>
         </header>
 
@@ -173,7 +183,6 @@
             </div>
             <hr style="border: none; border-top: 1px solid #eee; margin: 25px 0;">
             <div id="ingredient-inputs">
-                <!-- 5 baris input statis -->
                 <div class="input-row">
                     <select class="ingredient-select"></select>
                     <input type="number" class="ingredient-amount" placeholder="Jumlah" min="0" step="any">
@@ -205,7 +214,6 @@
             <a href="https://saweria.co/jalangoen" target="_blank" class="support-btn">Beri Secangkir Kopi ☕</a>
         </div>
 
-
         <div id="results" class="hidden">
             <h2>Hasil Analisis Pakan</h2>
             <p id="total-weight-display" style="text-align:center; font-weight:bold;"></p>
@@ -217,26 +225,33 @@
         </div>
 
         <footer class="footer">
-            <p>"maju terus peternak Indonesia"</p>
-            <p>by. <a href="https://www.instagram.com/jalan.goen" target="_blank" style="text-decoration:none; color:inherit;"><span><svg height="16" viewBox="0 0 16 16" width="16" style="vertical-align: -2px;"><path d="M4.869 0.002c-1.8 0-2.526 0.222-3.233 0.523-0.743 0.318-1.225 0.75-1.638 1.163C-0.319 2.126 0 2.859 0 4.659v6.682c0 1.8 0.222 2.526 0.523 3.233 0.318 0.743 0.75 1.225 1.638 1.638 0.438 0.417 1.161 0.681 2.126 0.681h6.212c1.8 0 2.526-0.222 3.233-0.523 0.743-0.318 1.225-0.75 1.638-1.163 0.417-0.438 0.681-1.161 0.681-2.126V4.659c0-1.8-0.222-2.526-0.523-3.233-0.318-0.743-0.75-1.225-1.163-1.638C13.291 0.22 12.565 0 10.765 0H4.869zM4.708 1.442h6.584c1.473 0 1.958 0.17 2.316 0.322 0.417 0.177 0.681 0.417 0.941 0.677 0.26 0.26 0.5 0.523 0.677 0.941 0.152 0.358 0.322 0.843 0.322 2.316v6.366c0 1.473-0.17 1.958-0.322 2.316-0.177 0.417-0.417 0.681-0.677 0.941-0.26 0.26-0.523 0.5-0.941 0.677-0.358 0.152-0.843 0.322-2.316 0.322H4.708c-1.473 0-1.958-0.17-2.316-0.322-0.417-0.177-0.681-0.417-0.941-0.677-0.26-0.26-0.5-0.523-0.677-0.941-0.152-0.358-0.322-0.843-0.322-2.316V4.958c0-1.473 0.17-1.958 0.322-2.316 0.177-0.417 0.417-0.681 0.677-0.941 0.26-0.26 0.523-0.5 0.941-0.677 0.358-0.152 0.843-0.322 2.316-0.322zM8 3.889c-2.277 0-4.111 1.834-4.111 4.111s1.834 4.111 4.111 4.111 4.111-1.834 4.111-4.111-1.834-4.111-4.111-4.111zm0 1.442A2.669 2.669 0 115.331 8a2.669 2.669 0 012.669-2.669zm4.269-1.21a0.96 0.96 0 11-1.92 0 0.96 0.96 0 011.92 0z" fill-rule="evenodd"></path></svg></span> kandang.goen</a></p>
-            
             <div class="shop-separator">
-                <h4>Butuh Peralatan & Pakan Murah Berkualitas?</h4>
-                <a href="https://collshp.com/keranjang.goen" class="shop-btn" target="_blank" rel="noopener noreferrer">🛒 Kunjungi Toko Kami</a>
+                <h4>Butuh Peralatan & Pakan Berkualitas?</h4>
+                <a href="https://collshp.com/keranjang.goen" class="shop-btn" target="_blank" rel="noopener noreferrer">🛒 Kunjungi Koleksi Shopee Kami</a>
             </div>
-            
+            <div class="footnote">
+                <p>"maju terus peternak Indonesia"</p>
+                <p>by. 
+                    <a href="https://www.instagram.com/jalan.goen" target="_blank" class="footnote-byline">
+                        <span><svg height="16" viewBox="0 0 16 16" width="16" style="vertical-align: -2px; display:inline-block; margin-right: 4px;"><path d="M4.869 0.002c-1.8 0-2.526 0.222-3.233 0.523-0.743 0.318-1.225 0.75-1.638 1.163C-0.319 2.126 0 2.859 0 4.659v6.682c0 1.8 0.222 2.526 0.523 3.233 0.318 0.743 0.75 1.225 1.638 1.638 0.438 0.417 1.161 0.681 2.126 0.681h6.212c1.8 0 2.526-0.222 3.233-0.523 0.743-0.318 1.225-0.75 1.638-1.163 0.417-0.438 0.681-1.161 0.681-2.126V4.659c0-1.8-0.222-2.526-0.523-3.233-0.318-0.743-0.75-1.225-1.163-1.638C13.291 0.22 12.565 0 10.765 0H4.869zM4.708 1.442h6.584c1.473 0 1.958 0.17 2.316 0.322 0.417 0.177 0.681 0.417 0.941 0.677 0.26 0.26 0.5 0.523 0.677 0.941 0.152 0.358 0.322 0.843 0.322 2.316v6.366c0 1.473-0.17 1.958-0.322 2.316-0.177 0.417-0.417 0.681-0.677 0.941-0.26 0.26-0.523 0.5-0.941 0.677-0.358 0.152-0.843 0.322-2.316 0.322H4.708c-1.473 0-1.958-0.17-2.316-0.322-0.417-0.177-0.681-0.417-0.941-0.677-0.26-0.26-0.5-0.523-0.677-0.941-0.152-0.358-0.322-0.843-0.322-2.316V4.958c0-1.473 0.17-1.958 0.322-2.316 0.177-0.417 0.417-0.681 0.677-0.941 0.26-0.26 0.523-0.5 0.941-0.677 0.358-0.152 0.843-0.322 2.316-0.322zM8 3.889c-2.277 0-4.111 1.834-4.111 4.111s1.834 4.111 4.111 4.111 4.111-1.834 4.111-4.111-1.834-4.111-4.111-4.111zm0 1.442A2.669 2.669 0 115.331 8a2.669 2.669 0 012.669-2.669zm4.269-1.21a0.96 0.96 0 11-1.92 0 0.96 0.96 0 011.92 0z" fill-rule="evenodd" fill="currentColor"></path></svg>kandang.goen</span>
+                    </a>
+                </p>
+            </div>
             <div class="disclaimer">
                 <strong>DISCLAIMER:</strong> Kalkulator ini bersifat sebagai alat bantu estimasi. Kandungan gizi riil pada bahan pakan dapat bervariasi tergantung pada kualitas, proses pengolahan, dan kebijakan produsen pakan. Selalu lakukan pengamatan langsung terhadap kondisi ternak Anda.
             </div>
         </footer>
     </div>
     
+    <script src="data_pakan.js"></script>
     <script>
-        // REVISI: Data disematkan langsung untuk menghilangkan error 'fetch'
+        let processedFeedData = {};
+
         function parseValue(text) {
-            if (typeof text !== 'string') return text || 0;
+            if (typeof text !== 'string' && typeof text !== 'number') return 0;
+            if(typeof text === 'number') return text;
             const cleanText = text.trim().toLowerCase();
-            if (!cleanText || cleanText === 'n/a' || cleanText === 'ada') return 0;
+            if (!cleanText || cleanText === 'n/a' || cleanText === 'ada' || cleanText === null) return 0;
             if (cleanText.startsWith('min')) return parseFloat(cleanText.replace('min', '').trim()) || 0;
             if (cleanText.startsWith('max')) return parseFloat(cleanText.replace('max', '').trim()) || 0;
             if (cleanText.includes('-')) {
@@ -246,64 +261,63 @@
             }
             return parseFloat(cleanText) || 0;
         }
-
-        const feedData = {
-            'Jagung Giling': { protein: 8.7, energi: 3610, lemak: 4.5, serat: 2.5, kalsium: 0.009, fosfor: 0.038 },
-            'Dedak Padi': { protein: 13, energi: 1900, lemak: 5, serat: 10, kalsium: 0.06, fosfor: 1.5 },
-            'Menir': { protein: 7.7, energi: 3620, lemak: 4.4, serat: 0.2, kalsium: 0.022, fosfor: 0.272 },
-            'Bungkil Kedelai': { protein: 45, energi: 2700, lemak: 1.25, serat: 4, kalsium: 0.2, fosfor: 0.67 },
-            'Tepung Ikan': { protein: 54, energi: 2750, lemak: 8, serat: 1, kalsium: 6.5, fosfor: 2.88 },
-            'Tepung Tulang': { protein: 0, energi: 0, lemak: 0, serat: 0, kalsium: 24, fosfor: 12 },
-            'Pollard': { protein: 15, energi: 1700, lemak: 4, serat: 9, kalsium: 0.1, fosfor: 0.9 },
-            'Canola (Bungkil Canola)': { protein: 36, energi: 2110.5, lemak: 1.5, serat: 34.53, kalsium: 0, fosfor: 0 },
-            'Daun Singkong': { protein: 6.8, energi: 0, lemak: 1.2, serat: 2.4, kalsium: 0.165, fosfor: 0.054 },
-            'Daun Pepaya': { protein: 8, energi: 790, lemak: 2, serat: 0, kalsium: 0.353, fosfor: 0.063 },
-            'Daun Kangkung (Segar)': { protein: 3.4, energi: 2900, lemak: 0.7, serat: 2, kalsium: 0.067, fosfor: 0.054 },
-            'Daun Sawi Hijau': { protein: 2.3, energi: 280, lemak: 0.3, serat: 2.5, kalsium: 0.22, fosfor: 0.038 },
-            'Daun Sawi Putih': { protein: 1, energi: 90, lemak: 0.1, serat: 0.8, kalsium: 0.056, fosfor: 0.042 },
-            'Daun Kol (Segar)': { protein: 2.5, energi: 510, lemak: 1.1, serat: 3.4, kalsium: 0.1, fosfor: 0.05 },
-            'Daun Kelor': { protein: 25.68, energi: 3162.97, lemak: 2.25, serat: 10.05, kalsium: 2.66, fosfor: 0.95 },
-            'Daun Bayam (Segar)': { protein: 2.2, energi: 160, lemak: 0.4, serat: 0.7, kalsium: 0.215, fosfor: 0.076 },
-            'Kecambah Padi': { protein: 9.06, energi: 0, lemak: 2.15, serat: 3.99, kalsium: 0.00043, fosfor: 0.18 },
-            'Kecambah Jagung': { protein: 3.27, energi: 3350, lemak: 1.35, serat: 2, kalsium: 0, fosfor: 0.089 },
-            'Azolla (Fermentasi)': { protein: 26, energi: 2893, lemak: 7, serat: 0, kalsium: 0, fosfor: 0 },
-            'Azolla (Segar Non-Fermentasi)': { protein: 21.37, energi: 2039, lemak: 2.8, serat: 24.03, kalsium: 1.16, fosfor: 1.29 },
-            'Nasi Aking (Fermentasi)': { protein: 8.31, energi: 3100, lemak: 3.28, serat: 5.7, kalsium: 0.99, fosfor: 0.52 },
-            'Nasi Limbah Rumah Tangga': { protein: 7.92, energi: 2323, lemak: 2.08, serat: 5.9, kalsium: 1.09, fosfor: 0.38 },
-            'Ampas Tahu (Kering)': { protein: 23.39, energi: 2830, lemak: 9.96, serat: 19.44, kalsium: 0.61, fosfor: 0.35 },
-            'Ampas Singkong (Onggok)': { protein: 2, energi: 2783, lemak: 2.3, serat: 31.6, kalsium: 0.15, fosfor: 0.14 },
-            'Konsentrat Protein 32% (Umum)': { protein: 32, energi: 1800, lemak: 4, serat: 2, kalsium: 10, fosfor: 0 },
-            'Konsentrat Protein 34% (124P)': { protein: 34, energi: 2755, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
-            'Konsentrat Protein 35% (Wonokoyo KLS Super)': { protein: 35, energi: 0, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
-            'Konsentrat Protein 37% (Grower)': { protein: 37, energi: 0, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
-            'Konsentrat Protein 37-39% (Hi-Pro-Vite 144 Itik)': { protein: 38, energi: 2538, lemak: 2, serat: 6, kalsium: 12, fosfor: 1.2 },
-            'Konsentrat Protein 40% (Comfeed Broiler)': { protein: 40, energi: 2500, lemak: 4, serat: 7, kalsium: 3, fosfor: 1.5 },
-            'Hi-Pro-Vite 511': { protein: 20, energi: 2950, lemak: 5, serat: 5, kalsium: 0.95, fosfor: 0.5 },
-            'Hi-Pro-Vite 512': { protein: 19, energi: 3100, lemak: 5, serat: 5, kalsium: 0.95, fosfor: 0.45 },
-            'Hi-Pro-Vite 591K': { protein: 19, energi: 0, lemak: 3, serat: 7, kalsium: 1.05, fosfor: 0.8 },
-            'Hi-Pro-Vite 592K': { protein: 19, energi: 2900, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
-            'Hi-Pro-Vite 594K': { protein: 18, energi: 3000, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
-            'Hi-Pro-Vite 324KJ': { protein: 18, energi: 2705, lemak: 0, serat: 0, kalsium: 4.575, fosfor: 0.415 },
-            'Comfeed BR 1': { protein: 20.5, energi: 0, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
-            'Comfeed Unggul 1': { protein: 19, energi: 0, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
-            'Comfeed Unggul 2': { protein: 19, energi: 2900, lemak: 0, serat: 0, kalsium: 0, fosfor: 0 },
-            'Comfeed GF 511': { protein: 20.5, energi: 3000, lemak: 0, serat: 5, kalsium: 1, fosfor: 0.8 },
-        };
         
-        // REVISI: window.onload disederhanakan karena tidak lagi async
-        window.onload = () => {
-            document.getElementById('loader').classList.add('hidden');
-            document.getElementById('calculator-form').classList.remove('hidden');
+        function transformData(rawData) {
+            const processedData = {};
+            for (const category in rawData) {
+                if (Array.isArray(rawData[category])) {
+                    rawData[category].forEach(item => {
+                        const name = item["Bahan Pakan"] || item["Merek/Varian Konsentrat"] || item["Merek/Varian Pakan"];
+                        if (name) {
+                            processedData[name] = {
+                                protein: parseValue(item["Protein Kasar (%)"]),
+                                energi: parseValue(item["Energi Metabolisme (kkal/kg)"]),
+                                lemak: parseValue(item["Lemak Kasar (%)"]),
+                                serat: parseValue(item["Serat Kasar (%)"]),
+                                kalsium: parseValue(item["Kalsium (%)"]),
+                                fosfor: parseValue(item["Fosfor (%)"])
+                            };
+                        }
+                    });
+                }
+            }
+            return processedData;
+        }
 
-            const selects = document.querySelectorAll('.ingredient-select');
-            const ingredients = Object.keys(feedData).sort();
-            let optionsHTML = '<option value="">-- Pilih Bahan Pakan --</option>';
-            ingredients.forEach(name => {
-                optionsHTML += `<option value="${name}">${name}</option>`;
-            });
-            selects.forEach(select => {
-                select.innerHTML = optionsHTML;
-            });
+        window.onload = () => {
+             try {
+                if (typeof feedData === 'undefined') {
+                    throw new Error("File data_pakan.js tidak ditemukan atau gagal dimuat. Pastikan file tersebut ada di folder yang sama dengan file HTML ini.");
+                }
+                
+                processedFeedData = transformData(feedData);
+
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('calculator-form').classList.remove('hidden');
+
+                const selects = document.querySelectorAll('.ingredient-select');
+                const ingredients = Object.keys(processedFeedData).sort();
+                let optionsHTML = '<option value="" selected>-- Pilih Bahan Pakan --</option>';
+                ingredients.forEach(name => {
+                    optionsHTML += `<option value="${name}">${name}</option>`;
+                });
+                
+                selects.forEach(select => {
+                    select.innerHTML = optionsHTML;
+                    select.classList.add('placeholder-shown');
+                    select.addEventListener('change', () => {
+                        if (select.value === "") {
+                            select.classList.add('placeholder-shown');
+                        } else {
+                            select.classList.remove('placeholder-shown');
+                        }
+                    });
+                });
+
+             } catch (error) {
+                 document.getElementById('loader').textContent = `Error: ${error.message}`;
+                 console.error(error);
+             }
         };
 
         document.getElementById('calculator-form').addEventListener('submit', function(event) {
@@ -333,7 +347,7 @@
             if (unit === 'gram') {
                 let totalWeight = 0;
                 inputs.forEach(input => {
-                    const nutrientData = feedData[input.name];
+                    const nutrientData = processedFeedData[input.name];
                     totalWeight += input.amount;
                     for (const key in finalNutrients) {
                         finalNutrients[key] += input.amount * (nutrientData[key] || 0);
@@ -356,7 +370,7 @@
                 }
 
                 inputs.forEach(input => {
-                    const nutrientData = feedData[input.name];
+                    const nutrientData = processedFeedData[input.name];
                     for (const key in finalNutrients) {
                         finalNutrients[key] += input.amount / 100 * (nutrientData[key] || 0);
                     }
